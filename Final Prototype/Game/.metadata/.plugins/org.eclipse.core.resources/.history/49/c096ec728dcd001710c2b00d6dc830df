@@ -1,0 +1,8 @@
+public class DrawImg {
+	
+	
+	public DrawImg(String filePath){
+		
+	}
+
+}

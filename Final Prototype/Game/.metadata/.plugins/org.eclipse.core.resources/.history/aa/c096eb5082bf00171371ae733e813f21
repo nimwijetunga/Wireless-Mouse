@@ -1,0 +1,21 @@
+import java.awt.Graphics;
+
+public class Player extends Entity{
+
+	public Player(int x, int y, int lives, int health, int size) {
+		super(x, y, lives, health, size);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public void move() {
+		
+	}
+
+	@Override
+	public void draw(Graphics g) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

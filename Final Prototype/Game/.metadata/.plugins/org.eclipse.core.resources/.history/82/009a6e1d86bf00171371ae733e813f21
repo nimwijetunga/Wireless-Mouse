@@ -1,0 +1,28 @@
+import java.util.ArrayList;
+import java.util.Random;
+
+public class Level {
+	
+	int enem;
+	private ArrayList<Enemy> enemy;
+	
+	public ArrayList<Enemy> getEnemy() {
+		return enemy;
+	}
+
+	public void setEnemy(ArrayList<Enemy> enemy) {
+		this.enemy = enemy;
+	}
+
+	public Level(int enem){
+		this.enem = enem;
+	}
+	
+	public void spawnEnemies(){
+		Random rand = new Random();
+		for(int i = 0; i < enem; i++){
+			int tx = random.nextInt();
+		}
+	}
+
+}

@@ -1,0 +1,32 @@
+import java.util.ArrayList;
+import java.util.Random;
+
+public class Level {
+	
+	int enem, collect;
+	private ArrayList<Enemy> enemy;
+	private ArrayList<Collectible> collectibles;
+	
+	private Player player;
+	
+	public ArrayList<Enemy> getEnemy() {
+		return enemy;
+	}
+
+	public Level(int enem, Player player, int collect){
+		enemy = new ArrayList<Enemy>();
+		this.collect = collect;
+		this.enem = enem;
+		this.player = player;
+	}
+	
+	public void spawn(int num){
+		Random rand = new Random();
+		for(int i = 0; i < enem; i++){
+			int tx = rand.nextInt(MouseMotion.WIDTH - 100) + 10;
+			int ty = rand.nextInt(100 - 0 + 1) + 0;
+			enemy.add(new Enemy(tx,ty,1,1,20, player));
+		}
+	}
+
+}

@@ -1,0 +1,20 @@
+import javax.swing.*;
+import java.awt.*;
+
+public class Draw extends JPanel{
+	private static int x,y;
+	
+	public void drawing(int xx, int yy){
+		x = xx;
+		y = yy;
+		System.out.println("x :" + x);
+		repaint();
+	}
+	
+	public void paintComponent(Graphics g){
+		super.paintComponent(g);
+		g.setColor(Color.BLACK);
+		g.fillRect(x, y, 20, 20);
+	}
+
+}

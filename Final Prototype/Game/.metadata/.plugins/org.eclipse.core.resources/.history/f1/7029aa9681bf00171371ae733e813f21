@@ -1,0 +1,9 @@
+public class Entity {
+	
+	int x,y,lives,health;
+	
+	public Entity(int x, int y, int lives, int health){
+		
+	}
+
+}

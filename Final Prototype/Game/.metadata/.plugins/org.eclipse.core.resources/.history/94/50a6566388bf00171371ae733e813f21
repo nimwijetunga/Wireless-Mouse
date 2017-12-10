@@ -1,0 +1,36 @@
+import java.awt.Color;
+import java.awt.Graphics;
+
+public class Enemy extends Entity{
+	
+	Player player;
+
+	public Enemy(int x, int y, int lives, int health, int size, Player player) {
+		super(x, y, lives, health, size);
+		this.player = player;
+	}
+	
+	public double getX(){
+		return this.x;
+	}
+
+	@Override
+	public void move(int x, int y) {
+		
+	}
+
+	@Override
+	public void draw(Graphics g) {
+		g.setColor(Color.RED);
+		//System.out.println("x: " + this.x + " " + "y: " + this.y);
+		g.fillRect(this.x, this.y, size, size);
+	}
+	
+	public void collision(){
+		if(collides(player)){
+			player.health--;
+			this.isDead = true;
+		}
+	}
+
+}

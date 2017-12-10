@@ -1,0 +1,33 @@
+import javax.swing.*;
+import java.awt.*;
+import java.util.ArrayList;
+
+public class Draw extends JPanel{
+	private static int x,y;
+	private Player player;
+	private Level level;
+	
+	public Draw(){
+		player = new Player(10,10,3,3,50);
+		level = new Level(3, player);
+	}
+	
+	public void drawing(int xx, int yy){
+		x = xx;
+		y = yy;
+		player.move(x, y);
+		for(Enemy i : level.getEnemy())
+			i.collision();
+		repaint();
+	}
+	
+	public void paintComponent(Graphics g){
+		super.paintComponent(g);
+		g.setColor(Color.RED);
+		for(Enemy i : level.getEnemy()){
+			i.draw(g);
+		}
+		player.draw(g);
+	}
+
+}

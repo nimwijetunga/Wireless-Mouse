@@ -1,0 +1,26 @@
+import javax.swing.*;
+import java.awt.*;
+
+public class Draw extends JPanel{
+	private static int x,y;
+	private Entity player;
+	
+	public Draw(){
+		player = new Player(10,10,3,3,50);
+	}
+	
+	public void drawing(int xx, int yy){
+		x = xx;
+		y = yy;
+		player.move(x, y);
+		repaint();
+	}
+	
+	public void paintComponent(Graphics g){
+		super.paintComponent(g);
+		g.setColor(Color.RED);
+		g.fillRect(x, y, 50, 50);
+		player.draw(g, x, y);
+	}
+
+}

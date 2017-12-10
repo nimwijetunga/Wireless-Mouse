@@ -1,0 +1,25 @@
+import java.awt.Color;
+import java.awt.Graphics;
+
+public class Player extends Entity{
+
+	public Player(int x, int y, int lives, int health, int size) {
+		super(x, y, lives, health, size);
+	}
+	
+	@Override
+	public void move(int x, int y){
+		if(x < MouseMotion.WIDTH && x > 0)
+			this.x = x;
+		if(y < MouseMotion.HEIGHT && y > 0)
+			this.y = y;
+	}
+
+	@Override
+	public void draw(Graphics g, int x, int y) {
+		g.setColor(Color.BLACK);
+		g.fillRect(x, y, size, size);
+		System.out.println("x: " + x);
+	}
+
+}

@@ -1,0 +1,19 @@
+import java.awt.Graphics;
+
+public class Player extends Entity{
+
+	public Player(int x, int y, int lives, int health, int size) {
+		super(x, y, lives, health, size);
+	}
+
+	@Override
+	public void move(int x, int y){
+		
+	}
+
+	@Override
+	public void draw(Graphics g) {
+		
+	}
+
+}

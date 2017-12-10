@@ -1,0 +1,33 @@
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Rectangle;
+
+public class Button extends Rectangle{
+	
+	int width, height, x, y;
+	Sprite background;
+	
+	public Button(String filePath, String text, int width, int height, int x, int y){
+		background = new Sprite(filePath, width - 10,  height);
+		this.width = width;
+		this.height = height;
+		this.x = x;
+		this.y = y;
+		this.setBounds(x - 10, y, width, height + 20);
+	}
+	
+	public boolean clicked(){
+		if(this.contains(MouseMotion.x + 50, MouseMotion.y + 50) && MouseMotion.clicked) {
+			System.out.println("Clicked");
+			MouseMotion.clicked = false;
+			return true;
+		}
+		return false;
+	}
+	
+	public void paintComponent(Graphics g){
+		g.setColor(Color.GREEN);
+		background.paintComponent(g, this.x, this.y);
+	}
+
+}

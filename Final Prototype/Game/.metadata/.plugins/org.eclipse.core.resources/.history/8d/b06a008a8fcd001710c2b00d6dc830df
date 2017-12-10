@@ -1,0 +1,31 @@
+import java.awt.Color;
+import java.awt.Graphics;
+
+public class Player extends Entity{
+
+	public Player(int x, int y, int lives, int health, int size) {
+		super(x, y, lives, health, size, EntityType.PLAYER, "res/basket.png");
+		this.x = x;
+		this.y = y;
+	}
+	
+	@Override
+	public void move(int x, int y){
+		if(x < MouseMotion.WIDTH - 60 && x > 0)
+			this.x = x;
+		if(y < MouseMotion.HEIGHT - 100 && y > 0)
+			this.y = y;
+	}
+
+	@Override
+	public void draw(Graphics g) {
+		g.setColor(Color.BLACK);
+		g.fillRect(this.x, this.y, size, size);
+	}
+
+	@Override
+	public void collision() {
+		//Does Nothing
+	}
+
+}

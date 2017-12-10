@@ -1,0 +1,32 @@
+import java.util.ArrayList;
+import java.util.Random;
+
+public class Level {
+	
+	int enem;
+	private ArrayList<Enemy> enemy;
+	private Player player;
+	
+	public ArrayList<Enemy> getEnemy() {
+		return enemy;
+	}
+
+	public Level(int enem, Player player){
+		enemy = new ArrayList<Enemy>();
+		this.enem = enem;
+		this.player = player;
+		this.spawnEnemies();
+	}
+	
+	public void spawnEnemies(){
+		Random rand = new Random();
+		for(int i = 0; i < enem; i++){
+			int tx = rand.nextInt(MouseMotion.WIDTH - 100) + 10;
+			int ty = rand.nextInt(MouseMotion.HEIGHT - 100) + 20;
+			System.out.println("tx: " + tx);
+			enemy.add(new Enemy(tx,ty,1,1,20, player));
+			System.out.println("x: " + enemy.get(i).x + " " + "y: " + enemy.get(i).y);
+		}
+	}
+
+}

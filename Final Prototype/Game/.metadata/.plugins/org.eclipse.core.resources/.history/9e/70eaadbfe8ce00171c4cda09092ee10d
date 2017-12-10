@@ -1,0 +1,49 @@
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Rectangle;
+
+public class Enemy extends Entity{
+	
+	private Player player;
+
+	public Enemy(int x, int y, int lives, int health, int size, Player player) {
+		super(x, y, lives, health, size, EntityType.ENEMY, "res/bomb.png");
+		this.x = x;
+		this.y = y;
+		this.player = player;
+	}
+
+	@Override
+	public void move(int x, int y) {
+		this.x +=x;
+		this.y += y;
+		
+		if(this.x<Level.spawnHeightSpread) {
+		// Sets previous location of entity to empty and sets new location to 1;
+		for(int i = this.x; i < this.width; i++)	{
+			for(int j = this.y+this.height-1; j >= this.y; j--)	{
+				
+				if(j<Level.spawnHeightSpread)	{
+				Level.setLoc(i, j-y, 0);
+				Level.setLoc(i, j, 1);
+				}
+			}
+		}
+		}
+	}
+
+	@Override
+	public void draw(Graphics g) {
+		g.setColor(Color.RED);
+		sprite.paintComponent(g, this.x, this.y);
+	}
+	
+	@Override
+	public void collision(){
+		if(this.collides(player)){
+			player.health--;
+			this.isDead = true;
+		}
+	}
+
+}

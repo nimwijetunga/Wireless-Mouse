@@ -1,0 +1,60 @@
+import javax.swing.*;
+import java.awt.*;
+import java.util.ArrayList;
+
+public class Draw extends JPanel{
+	private static int x,y;
+	private Player player;
+	private Level level;
+	private boolean dispose;
+
+	public Draw(){
+		dispose = false;
+		player = new Player(10,10,3,10,50);
+		level = new Level(3, player);
+	}
+	
+	public void update(){
+		player.move(x, y);
+		for(Enemy i : level.getEnemy())
+			i.collision();
+		for(int i = 0; i < level.getEnemy().size(); i++){
+			if(level.getEnemy().get(i).isDead)
+				level.getEnemy().remove(i);
+		}
+		
+		for(int i = 0; i < level.getEnemy().size(); i++){
+			if(level.getEnemy().get(i).y < 0)
+				level.getEnemy().remove(i);
+			else
+				level.getEnemy().get(i).move(0, 5);
+		}
+		if(level.getEnemy().size() == 0)
+			level.spawnEnemies();
+		
+		if(player.health == 0)
+			dispose = true;
+			
+	}
+	
+	public boolean isDispose() {
+		return dispose;
+	}
+	
+	public void drawing(int xx, int yy){
+		x = xx;
+		y = yy;
+		update();
+		repaint();
+	}
+	
+	public void paintComponent(Graphics g){
+		super.paintComponent(g);
+		g.setColor(Color.RED);
+		for(Enemy i : level.getEnemy()){
+			i.draw(g);
+		}
+		player.draw(g);
+	}
+
+}

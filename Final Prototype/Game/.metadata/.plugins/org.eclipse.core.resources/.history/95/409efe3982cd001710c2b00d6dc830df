@@ -1,0 +1,8 @@
+
+public class Collectible extends Entity{
+
+	public Collectible(int x, int y, int lives, int health, int size) {
+		super(x, y, lives, health, size);
+	}
+
+}

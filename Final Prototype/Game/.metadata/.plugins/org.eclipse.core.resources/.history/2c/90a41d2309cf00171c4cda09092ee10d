@@ -1,0 +1,86 @@
+import java.util.ArrayList;
+import java.util.Random;
+
+public class Level {
+	
+	private int enem = 3, collect = 3;
+	private final int SPAWN_LIMIT = 20;
+	private ArrayList<Entity> entities;
+	public static int spawnHeightSpread = 200; // Range of height in which entities can spawn
+	private static int[][] spawnLocation = new int[MouseMotion.WIDTH/50][spawnHeightSpread/50]; // Keeps track of spawn locations of entities to prevent overlap
+	private Player player;
+	
+	public ArrayList<Entity> getEntities() {
+		return entities;
+	}
+	
+	public static int getLoc(int x, int y)	{
+		return spawnLocation[x][y];
+	}
+	
+	public static void setLoc(int x, int y, int val)	{
+		spawnLocation[x][y]=val;
+	}
+	
+	public Level(int enem, Player player, int collect){
+		entities = new ArrayList<Entity>();
+		this.collect = collect;
+		this.player = player;
+		
+		for(int i = 0; i<MouseMotion.WIDTH/50; i++)	{
+			for(int j = 0; j < spawnHeightSpread/50; j++)	{
+				spawnLocation[i][j]=0; // Initializes spawn locations to be all empty (0)
+			}
+		}
+		
+		spawn(EntityType.ENEMY);
+		spawn(EntityType.COLLECT);
+	}
+	
+	public void spawn(EntityType t){
+		Random rand = new Random();
+		int total = 0;
+		String path = "res/";
+		if(t == EntityType.ENEMY) total = enem;
+		else total = collect;
+		for(int i = 0; i < total; i++){
+			int tx = rand.nextInt(MouseMotion.WIDTH/50 - 2)*50 + 100;
+			int ty = rand.nextInt(spawnHeightSpread/50)*50 - 200;
+			//if(i % 4 == 0) path += "melon.png";
+			path += "fruit.png";
+			if(t == EntityType.ENEMY)
+				addEntity(new Enemy(tx,ty,1,1,50, player));
+			else
+				addEntity(new Collectible(tx,ty,1,1,50, player, path));
+		}
+		increaseCount(t);
+	}
+	
+	public void increaseCount(EntityType t){
+		if(t == EntityType.ENEMY && enem < SPAWN_LIMIT) enem += 1;
+		else if(t == EntityType.COLLECT && collect < SPAWN_LIMIT) collect += 2;
+	}
+	
+	public void addEntity(Entity e){
+		
+		// Makes spawnLocation non-empty at entity location
+		for(int i = e.x; i < e.width; i++)	{
+			for(int j = e.y; j < e.height; j++)	{
+				spawnLocation[i][j]=1;
+			}
+		}
+		entities.add(e);
+	}
+	
+	public boolean respawn(EntityType t){
+		int count = 0, total = 0;
+		for(Entity i : this.entities){
+			if(i.getT() == t)count++;
+		}
+		if(t == EntityType.ENEMY) total = enem;
+		else total = collect;
+		if(count <= total / 2) return true;
+		return false;
+	}
+	
+}

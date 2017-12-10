@@ -1,0 +1,115 @@
+import java.util.ArrayList;
+import java.util.Random;
+
+/**
+ * 
+ * Responsible for entity generation and moderation of the current game state
+ *
+ */
+public class Level {
+	
+	//level class includes crucial aspects of the game such as spawning the collectibles and the enemies(i.e bombs)
+	//also includes methods increase count (to keep track of number of entities on the frame), add and respawn entities
+	private int enem = 3, collect = 3;
+	private final int SPAWN_LIMIT = 20;
+	private ArrayList<Entity> entities;
+	public static int spawnHeightSpread = 200; // Range of height in which entities can spawn
+	private Player player;
+	private int eSpawnCount, cSpwanCount;
+	
+	public ArrayList<Entity> getEntities() {
+		return entities;
+	}
+	
+	/**
+	 * @param enem is enemy count
+	 * @param player is the player
+	 * @param collect is the collectibles count
+	 */
+	public Level(int enem, Player player, int collect){
+		entities = new ArrayList<Entity>();
+		this.collect = collect;
+		this.player = player;
+		
+		spawn(EntityType.ENEMY);
+		spawn(EntityType.COLLECT);
+	}
+	
+	/**
+	 * @param t is the type of entity which is being spawned
+	 */
+	public void spawn(EntityType t){
+		Random rand = new Random();
+		int total = 0;
+		String path = "";
+		if(t == EntityType.ENEMY) total = enem;
+		else total = collect; 
+		//spawn the entities from the top of the screen at random places
+		for(int i = 0; i < total; i++){
+			int tx = rand.nextInt(MouseMotion.WIDTH/50 - 2)*50 + 50;
+			int ty = rand.nextInt(spawnHeightSpread/50)*50 - 200;
+			if(i % 4 == 0) path = "res/melon.png";
+			else path = "res/fruit.png";
+			if(t == EntityType.ENEMY)
+				addEntity(new Enemy(tx,ty,1,1,50, player));
+			else
+				addEntity(new Collectible(tx,ty,1,1,50, player, path));
+		}
+		//call increase count at the end of the method to keep track of number of entities on frame
+		increaseCount(t);
+	}
+	
+	
+	/**Increase the entity count
+	 * @param t is the type of entity
+	 */
+	public void increaseCount(EntityType t){
+		//If the type is of enemy and current count is less than the spawn limit then spawn
+		if(t == EntityType.ENEMY && enem < SPAWN_LIMIT && this.eSpawnCount > 3){ 
+			enem += 1;
+			this.eSpawnCount = 0;
+			return;
+		//Otherwise increase the spawn count
+		}else if(t == EntityType.ENEMY && enem < SPAWN_LIMIT){
+			this.eSpawnCount++;
+			return;
+		}
+		//Similar as above for collectibles
+		if(t == EntityType.COLLECT && collect < SPAWN_LIMIT && this.cSpwanCount > 3){
+		   collect += 2;
+		   this.cSpwanCount = 0;
+		   return;
+		}else if (t == EntityType.COLLECT && collect < SPAWN_LIMIT){
+			this.cSpwanCount++;
+			return;
+		}
+		
+		
+	}
+	
+	/**
+	 * @param e is the enttiy to be added
+	 */
+	public void addEntity(Entity e){
+		entities.add(e);
+	}
+	
+	/**
+	 * @param t is the type of entity
+	 * @return true if new entities should respawn
+	 */
+	public boolean respawn(EntityType t){
+		int count = 0, total = 0;
+		//Get the current number of entites on the screen
+		for(Entity i : this.entities){
+			if(i.getT() == t)count++;
+		}
+		
+		if(t == EntityType.ENEMY) total = enem;
+		else total = collect;
+		//As one entity goes off the screen spawn another
+		if(count <= total - 1) return true;
+		return false;
+	}
+	
+}

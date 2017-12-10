@@ -1,0 +1,27 @@
+import javax.swing.*;
+import java.awt.event.*;
+
+public class MouseMotion {
+private static int x,y;
+private static Draw canvas;
+public static final int WIDTH = 400, HEIGHT = 400;
+
+public static void main(String[] args){
+	JFrame frame = new JFrame("Mouse");
+	canvas = new Draw(frame);
+	frame.setVisible(true);
+	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	frame.setSize(400, 400);
+	frame.add(canvas);
+	canvas.addMouseMotionListener(new AL());
+	System.out.println("Here");
+}
+
+static class AL extends MouseAdapter{
+	public void mouseMoved(MouseEvent e){
+		x = e.getX();
+		y = e.getY();
+		canvas.drawing(x, y);
+	}
+}
+}

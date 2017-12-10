@@ -1,0 +1,42 @@
+import javax.swing.*;
+import java.awt.event.*;
+
+public class MouseMotion implements Runnable{
+private static int x,y;
+private static Draw canvas;
+public static final int WIDTH = 400, HEIGHT = 800;
+public static JFrame frame;
+
+public static void main(String[] args){
+	frame = new JFrame("Mouse");
+	canvas = new Draw();
+	frame.setVisible(true);
+	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	frame.setSize(WIDTH, HEIGHT);
+	frame.add(canvas);
+	canvas.addMouseMotionListener(new AL());
+	Thread thread = new Thread(new MouseMotion());
+	thread.start();
+	while(true){
+		canvas.drawing(x, y);
+		//System.out.println(canvas.isDispose());
+		if(canvas.isDispose()){
+			frame.setVisible(false);
+			frame.dispose();
+		}
+	}
+}
+
+static class AL extends MouseAdapter{
+	public void mouseMoved(MouseEvent e){
+		x = e.getX();
+		y = e.getY();
+	}
+}
+
+@Override
+public void run() {
+	System.out.println("Hello World");
+	
+}
+}

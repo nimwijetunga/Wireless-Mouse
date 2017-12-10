@@ -1,0 +1,36 @@
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Rectangle;
+
+public class Enemy extends Entity{
+	
+	private Player player;
+
+	public Enemy(int x, int y, int lives, int health, int size, Player player) {
+		super(x, y, lives, health, size, EntityType.ENEMY, "res/bomb.png");
+		this.x = x;
+		this.y = y;
+		this.player = player;
+	}
+
+	@Override
+	public void move(int x, int y) {
+		this.x +=x;
+		this.y += y;
+	}
+
+	@Override
+	public void draw(Graphics g) {
+		g.setColor(Color.RED);
+		g.fillRect(this.x, this.y, size, size);
+	}
+	
+	@Override
+	public void collision(){
+		if(this.collides(player)){
+			player.health--;
+			this.isDead = true;
+		}
+	}
+
+}

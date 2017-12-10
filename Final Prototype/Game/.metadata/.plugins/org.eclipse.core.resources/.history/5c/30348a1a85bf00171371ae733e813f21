@@ -1,0 +1,23 @@
+import java.awt.Graphics;
+
+public class Enemy extends Entity{
+
+	public Enemy(int x, int y, int lives, int health, int size, Player player) {
+		super(x, y, lives, health, size);
+	}
+
+	@Override
+	public void move(int x, int y) {
+		
+	}
+
+	@Override
+	public void draw(Graphics g) {
+		
+	}
+	
+	public void collides(){
+		
+	}
+
+}

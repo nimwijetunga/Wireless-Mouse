@@ -1,0 +1,9 @@
+import java.awt.Rectangle;
+
+public class Button extends Rectangle{
+	
+	public Button(String text, int width, int height){
+		
+	}
+
+}

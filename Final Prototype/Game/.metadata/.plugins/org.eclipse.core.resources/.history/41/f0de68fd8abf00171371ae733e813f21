@@ -1,0 +1,26 @@
+import java.awt.Graphics;
+import java.awt.Rectangle;
+
+public abstract class Entity extends Rectangle{
+	
+	protected Rectangle rect = new Rectangle();
+	protected int lives,health, size;
+	protected boolean isDead;
+	
+	public Entity(int x, int y, int lives, int health, int size){
+		isDead = false;
+		this.rect.setBounds(x, y, size + 50, size + 50);
+		this.lives = lives;
+		this.size = size;
+		this.health = health;
+	}
+	
+	public abstract void move(int x, int y);
+	public abstract void draw(Graphics g);
+	
+	public boolean collides(Entity a){
+		if(this.rect.intersects(a.rect))
+			return true;
+		return false;
+	}
+}

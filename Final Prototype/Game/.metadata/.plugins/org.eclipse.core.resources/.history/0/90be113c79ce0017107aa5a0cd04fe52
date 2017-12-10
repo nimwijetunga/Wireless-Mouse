@@ -1,0 +1,73 @@
+import javax.swing.*;
+import java.awt.*;
+import java.util.ArrayList;
+
+public class Draw extends JPanel{
+	private static int x,y;
+	private Player player;
+	private Level level;
+	private boolean dispose;
+
+	public Draw(){
+		dispose = false;
+		player = new Player(10,10,3,10,50);
+		level = new Level(2, player,3);
+	}
+	
+	public void update(){
+		player.move(x, y);
+		
+		//Check for Collision with Entities
+		for(Entity i : level.getEntities())
+			i.collision();
+		
+		for(int i = 0; i < level.getEntities().size(); i++){
+			if(level.getEntities().get(i).isDead)
+				level.getEntities().remove(i);
+		}
+		
+		//Move Entities
+		for(int i = 0; i < level.getEntities().size(); i++){
+			if(level.getEntities().get(i).y > MouseMotion.HEIGHT)
+				level.getEntities().remove(i);
+			else
+				level.getEntities().get(i).move(0, 5);
+		}
+		
+		//Respawn Entites
+		if(level.respawn(EntityType.ENEMY))
+			level.spawn(3, EntityType.ENEMY);
+		else if(level.respawn(EntityType.COLLECT))
+			level.spawn(3, EntityType.COLLECT);
+		
+		if(player.health <= 0) dispose = true;
+			
+	}
+	
+	public boolean isDispose() {
+		return dispose;
+	}
+	
+	public void drawing(int xx, int yy){
+		x = xx;
+		y = yy;
+		update();
+		repaint();
+	}
+	
+	public void paintComponent(Graphics g){
+		super.paintComponent(g);
+		g.setColor(Color.RED);
+		for(Entity i : level.getEntities()){
+			i.draw(g);
+		}
+		player.draw(g);
+		g.setFont(new Font("Impact", Font.BOLD,30));
+		String score = Integer.toString(player.getScore());
+		String lives = Integer.toString(player.getHealth());
+		//int width = g.getFontMetrics().stringWidth(score); Doesn't Work??
+		g.drawString("Lives: " + lives, 30, 30);
+		g.drawString("Score: " + score, MouseMotion.WIDTH - 170, 30);
+	}
+
+}

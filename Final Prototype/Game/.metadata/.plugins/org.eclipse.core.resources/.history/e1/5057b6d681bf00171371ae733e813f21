@@ -1,0 +1,18 @@
+import java.awt.Rectangle;
+
+public abstract class Entity extends Rectangle{
+	
+	protected int rect,lives,health;
+	
+	public Entity(int x, int y, int lives, int health){
+		this.x = x;
+		this.y = y;
+		this.lives = lives;
+		this.health = health;
+	}
+	
+	public abstract void move();
+	
+	
+
+}

@@ -1,0 +1,12 @@
+public abstract class Entity {
+	
+	protected int x,y,lives,health;
+	
+	public Entity(int x, int y, int lives, int health){
+		this.x = x;
+		this.y = y;
+		this.lives = lives;
+		this.health = health;
+	}
+
+}

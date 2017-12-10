@@ -1,0 +1,19 @@
+import java.awt.Graphics;
+import java.awt.Rectangle;
+
+public class Button extends Rectangle{
+	
+	int width, height, x, y;
+	
+	public Button(String text, int width, int height, int x, int y){
+		this.width = width;
+		this.height = height;
+		this.x = x;
+		this.y = y;
+	}
+	
+	public void paintComponent(Graphics g){
+		
+	}
+
+}
